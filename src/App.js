@@ -19,6 +19,13 @@ const App = () => {
     setValue("")
   }
 
+  // on pressing enter submit the input
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      getMessages()
+    }
+  }
+
   const getMessages = async () => {
     const options = {
       method: "POST",
@@ -40,17 +47,6 @@ const App = () => {
     }
   }
 
-// //submit on enter
-//   useEffect(() => {
-//     const input = document.getElementById("question")
-//     input.addEventListener("keyup", function(event) {
-//       if (event.keyCode === 13) {
-//         event.preventDefault();
-//         document.getElementById("submit").click();
-//       }
-//     })
-//   }, [])
-
   useEffect(() => {
     if (!currentTitle && value && message) {
       setCurrentTitle(value)
@@ -60,7 +56,7 @@ const App = () => {
         [...prevChats,
           {
             title: currentTitle,
-            role: "user",
+            role: "User",
             content: value
           }, {
             title: currentTitle,
@@ -74,6 +70,12 @@ const App = () => {
 
   const currentChat = previousChats.filter(previousChat => previousChat.title === currentTitle)
   const uniqueTitles = Array.from(new Set(previousChats.map((previousChat) => previousChat.title)))
+
+  // pin the chat to the bottom
+  useEffect(() => {
+    const feed = document.querySelector(".feed")
+    feed.scrollTop = feed.scrollHeight
+  }, [currentChat])
 
   return (
     <div className="app">
@@ -92,34 +94,38 @@ const App = () => {
       </section>
 
       <section className="main">
+        <h1>Chat-JellyPT</h1>
         {!currentTitle && 
           <div className="intro">
-            <h1>Chat Jelly-PT</h1>
             <a href="https://github.com/internetmara/chat-JellyPT" target="_blank" rel="noreferrer">
               <img src="jelly.png" className="jelly" alt="jelly" />
-            </a>
+              </a>
+              <p>How can Jelly help you today?</p>
           </div>
         }
         <ul className="feed">
           {currentChat?.map((chatMessage, index) => {
-            const role = chatMessage.role
+            const role = chatMessage.role === "User" ? "You" : "Chat-JellyPT"
             const content = chatMessage.content
             return (
               <li key={index}>
-                <p className="role">{role + ":"}</p>
-                <p className="response">{content}</p>
-              </li>
+                <div className="role-container">
+                  <img className="avatar" src={chatMessage.role === "User" ? "user.png" : "jelly.png"} alt={chatMessage.role} />
+                  <p className="role">{role + ":"}</p>
+                </div>
+                <p className={role !== "User" ? "response" : ""}>{content}</p>
+              </li> 
             )
           })}
         </ul>
         <div className="bottom-section">
           <div className="input-container">
-            <input id="question" value={value} onChange={(e) => setValue(e.target.value)}/>
+            <input id="question" value={value} onKeyDown={handleKeyDown} onChange={(e) => setValue(e.target.value)}/>
             <div id="submit" onClick={getMessages}><i class="fa-solid fa-arrow-up"></i></div>
           </div>
           <div id="loading">{loading ? "Loading..." : ""}</div>
         </div>
-        <p className="info">Chat Jelly-PT may produce inaccurate information about people, places, or facts. This is because the
+        <p className="info">Chat-JellyPT may produce inaccurate information about people, places, or facts. This is because the
           AI was modeled on the brain of a shih tzu.</p>
         </section>
     </div>

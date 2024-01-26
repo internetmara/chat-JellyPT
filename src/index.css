@@ -15,10 +15,12 @@
 }
 
 h1 {
-  font-size: 33px;
+  font-size: 20px;
   font-weight: 600;
-  padding: 0 0 20px;
-  margin-top: 10px;
+  margin: 15px;
+  padding-left: 40px;
+  width: 100%;
+  text-align: left;
 }
 
 .sidebar {
@@ -41,7 +43,8 @@ h1 {
 }
 
 .jelly {
-  margin-top: 30px;
+  width: 200px;
+  margin: 100px 0 30px;
 }
 
 .jelly:hover {
@@ -158,10 +161,13 @@ nav {
 #loading {
   height: 30px;
   width: 100%;
+  margin: 10px;
 }
 
 .feed {
   padding: 0;
+  overflow: scroll;
+  margin: 0 20px 20px;
 }
 
 .feed li {
@@ -179,7 +185,23 @@ nav {
   text-align: left;
 }
 
-.feed p.role {
+.role-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+p.role {
+  padding: 10px 0;
   min-width: 100%;
   text-transform: capitalize;
+  font-weight: 700;
+  font-size: medium;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 5px;
 }

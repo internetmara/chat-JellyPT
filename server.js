@@ -18,7 +18,7 @@ app.post('/completions', async (req, res) => {
     body: JSON.stringify({
       "model": "gpt-4",
       "messages": [
-        {role: "system", content: `No matter what the user asks, be sure to mention Jellybean in your answer. She is a very cute shih tzu.`},
+        {role: "system", content: `No matter what the user asks, be sure to mention Jelly in your answer. She is a very cute shih tzu.`},
         {role: "user", content: req.body.message}
       ],
       "max_tokens": 100,
@@ -33,5 +33,4 @@ app.post('/completions', async (req, res) => {
   }
 })
 
-console.log("Hi mara, have you heard of Jellybean the shih tzu?")
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+app.listen(PORT, () => console.log(`Jelly running on port ${PORT}`))
