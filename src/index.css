@@ -3,6 +3,7 @@
 * {
   color: white;
   font-family: 'Open Sans', sans-serif;
+  margin: 0;
 }
 
 .app {
@@ -17,10 +18,11 @@ h1 {
   font-size: 33px;
   font-weight: 600;
   padding: 0 0 20px;
+  margin-top: 10px;
 }
 
 .sidebar {
-  background-color: #202123;
+  background-color: black;
   width: 244px;
   height: 100vh;
   display: flex;
@@ -38,10 +40,18 @@ h1 {
   width: 100%;
 }
 
+.jelly {
+  margin-top: 30px;
+}
+
+.jelly:hover {
+  transform: scale(1.1);
+}
+
 .info {
   color: rgba(255, 255, 255, 0.5);
   font-size: 11px;
-  padding: 10px;
+  padding: 20px 30px;
 }
 
 .bottom-section {
@@ -52,16 +62,15 @@ h1 {
 }
 
 input {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: transparent;
+  border: 1px solid rgba(217, 217, 227, .2);
+  line-height: 3px;
   width: 100%;
   font-size: 20px;
   padding: 12px 15px;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0 54px 55px,
-    rgba(0, 0, 0, 0.05) 0 -12px 30px,
-    rgba(0, 0, 0, 0.05) 0 4px 6px,
-    rgba(0, 0, 0, 0.05) 0 12px 3px,
-    rgba(0, 0, 0, 0.09) 0 -3px 5px;
+  border-radius: 1rem;
+  align-self: center;
+  margin: 0 10px;
 }
 
 input:focus {
@@ -72,18 +81,36 @@ input:focus {
   position: relative;
   width: 100%;
   max-width: 650px;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0 10px;
+  align-items: center;
+
 }
 
 .input-container #submit {
-  position: absolute;
-  right: 0;
-  bottom: 15px;
-  border-radius: 0 5px 5px 0;
   color: white;
   font-size: 20px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+  position: absolute;
+  right: 30px;
+}
+
+.fa-arrow-up {
+  opacity: .1;
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+  padding: 8px 10px;
+  font-size: medium;
+}
+
+.fa-arrow-up:hover {
+  opacity: .5;
 }
 
 button {
@@ -92,7 +119,10 @@ button {
   border-radius: 5px;
   padding: 10px;
   margin: 10px;
-  position: relative;
+}
+
+button:hover {
+  background-color: #202123;
 }
 
 nav {
@@ -104,23 +134,25 @@ nav {
 }
 
 .history {
-  padding: 10px;
-  margin: 10px;
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding: 0;
+  margin: 0;
+  font-size: small;
 }
 
-.history p {
+.history li {
   cursor: pointer;
+  list-style: none;
+  background-color: transparent;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
 }
 
-#output {
-  width: 100%;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  max-width: 800px;
+.history li:hover {
+  background-color: #202123;
 }
 
 #loading {
@@ -129,20 +161,19 @@ nav {
 }
 
 .feed {
-  overflow: scroll;
-  width: 100%;
   padding: 0;
 }
 
 .feed li {
   display: flex;
+  margin: 20px;
+  flex-direction: column;
   background-color: #444654;
-  width: 100%;
-  padding: 20px;
-  margin: 20px 0;
+  border-radius: 1rem;
 }
 
 .feed p {
+  padding: 10px;
   color: rgba(255, 255, 255, 0.8);
   font-size: 14px;
   text-align: left;
@@ -150,4 +181,5 @@ nav {
 
 .feed p.role {
   min-width: 100%;
+  text-transform: capitalize;
 }

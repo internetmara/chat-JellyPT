@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Chat-JellyPT",
+  "name": "Chat-JellyPT",
   "icons": [
     {
       "src": "jelly.png",

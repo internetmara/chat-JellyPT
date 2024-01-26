@@ -2,26 +2,28 @@ import { useState, useEffect } from 'react';
 
 const App = () => {
   const [message, setMessage] = useState(null)
-  const [question, setQuestion] = useState(null)
-  const [histories, setHistories] = useState([])
+  const [value, setValue] = useState(null)
+  const [previousChats, setPreviousChats] = useState([])
   const [currentTitle, setCurrentTitle] = useState(null)
   const [loading, setLoading] = useState(false)
 
   const createNewChat = () => {
     setMessage(null)
-    setQuestion("")
+    setValue("")
     setCurrentTitle(null)
   }
 
   const handleClick = (uniqueTitle) => {
     setCurrentTitle(uniqueTitle)
+    setMessage(null)
+    setValue("")
   }
 
   const getMessages = async () => {
     const options = {
       method: "POST",
       body: JSON.stringify({
-        message: question
+        message: value
       }),
       headers: {
         "Content-Type": "application/json",
@@ -32,36 +34,34 @@ const App = () => {
       const response = await fetch('http://localhost:8000/completions', options)
       setLoading(false)
       const data = await response.json()
-      console.log(data)
       setMessage(data.choices[0].message)
     } catch (err) {
       console.error(err)
     }
   }
 
-//submit on enter
-  useEffect(() => {
-    const input = document.getElementById("question")
-    input.addEventListener("keyup", function(event) {
-      if (event.keyCode === 13) {
-        event.preventDefault();
-        document.getElementById("submit").click();
-      }
-    })
-  }, [])
+// //submit on enter
+//   useEffect(() => {
+//     const input = document.getElementById("question")
+//     input.addEventListener("keyup", function(event) {
+//       if (event.keyCode === 13) {
+//         event.preventDefault();
+//         document.getElementById("submit").click();
+//       }
+//     })
+//   }, [])
 
   useEffect(() => {
-    console.log(currentTitle, question, message)
-    if (!currentTitle && question && message) {
-      setCurrentTitle(question)
+    if (!currentTitle && value && message) {
+      setCurrentTitle(value)
     } 
-    if (currentTitle && question && message) {
-      setHistories(history => (
-        [...history, 
+    if (currentTitle && value && message) {
+      setPreviousChats(prevChats => (
+        [...prevChats,
           {
             title: currentTitle,
             role: "user",
-            content: question
+            content: value
           }, {
             title: currentTitle,
             role: message.role,
@@ -72,23 +72,22 @@ const App = () => {
     }}
   , [message,  currentTitle])
 
-  console.log(histories)
-
-  const currentChat = histories.filter(history => history.title === currentTitle)
-  const uniqueTitles = Array.from(new Set(histories.map((history) => history.title)))
-  console.log(uniqueTitles)
+  const currentChat = previousChats.filter(previousChat => previousChat.title === currentTitle)
+  const uniqueTitles = Array.from(new Set(previousChats.map((previousChat) => previousChat.title)))
 
   return (
     <div className="app">
       <section className="sidebar">
-        <button className="new-chat" onClick={createNewChat}>New Chat</button>
+        <button className="new-chat" onClick={createNewChat}>+  New Chat</button>
         <ul className="history">
           {uniqueTitles?.map((uniqueTitle, index) => (
             <li key={index} onClick={() => handleClick(uniqueTitle)}>{uniqueTitle}</li>
           ))}
         </ul>
         <nav>
-          <p>A Very Finkel™ Production</p>
+          <a href="https://internetmara.github.io/" target="_blank" rel="noreferrer">
+            <p>A Very Finkel™ Production</p>
+          </a>
         </nav>
       </section>
 
@@ -96,22 +95,27 @@ const App = () => {
         {!currentTitle && 
           <div className="intro">
             <h1>Chat Jelly-PT</h1>
-            <img src="jelly.png" alt="jelly" />
-            <p>Ask me anything!</p>
+            <a href="https://github.com/internetmara/chat-JellyPT" target="_blank" rel="noreferrer">
+              <img src="jelly.png" className="jelly" alt="jelly" />
+            </a>
           </div>
         }
         <ul className="feed">
-          {currentChat?.map((chatMessage, index) => (
-            <li key={index}>
-              <p className="role">{chatMessage.role}</p>
-              <p>{chatMessage.content}</p>
-            </li>
-          ))}
+          {currentChat?.map((chatMessage, index) => {
+            const role = chatMessage.role
+            const content = chatMessage.content
+            return (
+              <li key={index}>
+                <p className="role">{role + ":"}</p>
+                <p className="response">{content}</p>
+              </li>
+            )
+          })}
         </ul>
         <div className="bottom-section">
           <div className="input-container">
-            <input id="question" value={question} onChange={(e) => setQuestion(e.target.value)}></input>
-            <div id="submit" onClick={getMessages}>➢</div>
+            <input id="question" value={value} onChange={(e) => setValue(e.target.value)}/>
+            <div id="submit" onClick={getMessages}><i class="fa-solid fa-arrow-up"></i></div>
           </div>
           <div id="loading">{loading ? "Loading..." : ""}</div>
         </div>
