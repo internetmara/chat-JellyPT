@@ -15,6 +15,9 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
+  "engines": {
+  "node": "21.6.1"
+  },
   "scripts": {
     "start:frontend": "react-scripts start",
     "start:backend": "nodemon server.js",
