@@ -17,7 +17,8 @@
     "web-vitals": "^2.1.4"
   },
   "engines": {
-    "node": "21.6.1"
+    "node": "v21.6.1",
+    "npm": "10.2.4"
   },
   "scripts": {
     "start:frontend": "react-scripts start",
