@@ -8,6 +8,13 @@ app.use(cors())
 
 const CHAT_GPT_API_KEY = process.env.CHAT_GPT_API_KEY
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname,  "build", "index.html"));
+  });
+}
+
 app.post('/completions', async (req, res) => {
   const options = {
     method: "POST",
