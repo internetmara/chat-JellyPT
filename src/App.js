@@ -30,17 +30,19 @@ const App = () => {
     const options = {
       method: "POST",
       body: JSON.stringify({
-        message: value
+        "message": value
       }),
       headers: {
         "Content-Type": "application/json",
       },
     }
+    console.log(options)
     try {
       setLoading(true)
       const response = await fetch('http://localhost:8000/completions', options)
       setLoading(false)
       const data = await response.json()
+      console.log(data)
       setMessage(data.choices[0].message)
     } catch (err) {
       console.error(err)
@@ -121,7 +123,7 @@ const App = () => {
         <div className="bottom-section">
           <div className="input-container">
             <input id="question" value={value} onKeyDown={handleKeyDown} onChange={(e) => setValue(e.target.value)}/>
-            <div id="submit" onClick={getMessages}><i class="fa-solid fa-arrow-up"></i></div>
+            <div id="submit" onClick={getMessages}><i className="fa-solid fa-arrow-up"></i></div>
           </div>
           <div id="loading">{loading ? "Loading..." : ""}</div>
         </div>
